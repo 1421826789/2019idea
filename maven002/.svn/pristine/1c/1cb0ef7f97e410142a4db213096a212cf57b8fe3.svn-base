@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youzhong.dao.RequireMapper">
+  <resultMap id="BaseResultMap" type="com.youzhong.entity.Require">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PROID" jdbcType="DECIMAL" property="proid" />
+    <result column="MODELID" jdbcType="DECIMAL" property="modelid" />
+    <result column="PLANID" jdbcType="DECIMAL" property="planid" />
+    <result column="FROMID" jdbcType="DECIMAL" property="fromid" />
+    <result column="EXAMUSER" jdbcType="VARCHAR" property="examuser" />
+    <result column="R_LEVEL" jdbcType="DECIMAL" property="rLevel" />
+    <result column="SENDUSER" jdbcType="VARCHAR" property="senduser" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.youzhong.entity.Require">
+    <result column="CONTENT" jdbcType="CLOB" property="content" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, NAME, PROID, MODELID, PLANID, FROMID, EXAMUSER, R_LEVEL, SENDUSER
+  </sql>
+  <sql id="Blob_Column_List">
+    CONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.youzhong.entity.RequireExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from TF_REQUIRE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.youzhong.entity.RequireExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from TF_REQUIRE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from TF_REQUIRE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from TF_REQUIRE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.youzhong.entity.RequireExample">
+    delete from TF_REQUIRE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.youzhong.entity.Require">
+    insert into TF_REQUIRE (ID, NAME, PROID, 
+      MODELID, PLANID, FROMID, 
+      EXAMUSER, R_LEVEL, SENDUSER, 
+      CONTENT)
+    values (#{id,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR}, #{proid,jdbcType=DECIMAL}, 
+      #{modelid,jdbcType=DECIMAL}, #{planid,jdbcType=DECIMAL}, #{fromid,jdbcType=DECIMAL}, 
+      #{examuser,jdbcType=VARCHAR}, #{rLevel,jdbcType=DECIMAL}, #{senduser,jdbcType=VARCHAR}, 
+      #{content,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.youzhong.entity.Require">
+    insert into TF_REQUIRE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="proid != null">
+        PROID,
+      </if>
+      <if test="modelid != null">
+        MODELID,
+      </if>
+      <if test="planid != null">
+        PLANID,
+      </if>
+      <if test="fromid != null">
+        FROMID,
+      </if>
+      <if test="examuser != null">
+        EXAMUSER,
+      </if>
+      <if test="rLevel != null">
+        R_LEVEL,
+      </if>
+      <if test="senduser != null">
+        SENDUSER,
+      </if>
+      <if test="content != null">
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="proid != null">
+        #{proid,jdbcType=DECIMAL},
+      </if>
+      <if test="modelid != null">
+        #{modelid,jdbcType=DECIMAL},
+      </if>
+      <if test="planid != null">
+        #{planid,jdbcType=DECIMAL},
+      </if>
+      <if test="fromid != null">
+        #{fromid,jdbcType=DECIMAL},
+      </if>
+      <if test="examuser != null">
+        #{examuser,jdbcType=VARCHAR},
+      </if>
+      <if test="rLevel != null">
+        #{rLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="senduser != null">
+        #{senduser,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.youzhong.entity.RequireExample" resultType="java.lang.Long">
+    select count(*) from TF_REQUIRE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update TF_REQUIRE
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.name != null">
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proid != null">
+        PROID = #{record.proid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.modelid != null">
+        MODELID = #{record.modelid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.planid != null">
+        PLANID = #{record.planid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fromid != null">
+        FROMID = #{record.fromid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.examuser != null">
+        EXAMUSER = #{record.examuser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rLevel != null">
+        R_LEVEL = #{record.rLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="record.senduser != null">
+        SENDUSER = #{record.senduser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null">
+        CONTENT = #{record.content,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update TF_REQUIRE
+    set ID = #{record.id,jdbcType=DECIMAL},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      PROID = #{record.proid,jdbcType=DECIMAL},
+      MODELID = #{record.modelid,jdbcType=DECIMAL},
+      PLANID = #{record.planid,jdbcType=DECIMAL},
+      FROMID = #{record.fromid,jdbcType=DECIMAL},
+      EXAMUSER = #{record.examuser,jdbcType=VARCHAR},
+      R_LEVEL = #{record.rLevel,jdbcType=DECIMAL},
+      SENDUSER = #{record.senduser,jdbcType=VARCHAR},
+      CONTENT = #{record.content,jdbcType=CLOB}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update TF_REQUIRE
+    set ID = #{record.id,jdbcType=DECIMAL},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      PROID = #{record.proid,jdbcType=DECIMAL},
+      MODELID = #{record.modelid,jdbcType=DECIMAL},
+      PLANID = #{record.planid,jdbcType=DECIMAL},
+      FROMID = #{record.fromid,jdbcType=DECIMAL},
+      EXAMUSER = #{record.examuser,jdbcType=VARCHAR},
+      R_LEVEL = #{record.rLevel,jdbcType=DECIMAL},
+      SENDUSER = #{record.senduser,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.youzhong.entity.Require">
+    update TF_REQUIRE
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="proid != null">
+        PROID = #{proid,jdbcType=DECIMAL},
+      </if>
+      <if test="modelid != null">
+        MODELID = #{modelid,jdbcType=DECIMAL},
+      </if>
+      <if test="planid != null">
+        PLANID = #{planid,jdbcType=DECIMAL},
+      </if>
+      <if test="fromid != null">
+        FROMID = #{fromid,jdbcType=DECIMAL},
+      </if>
+      <if test="examuser != null">
+        EXAMUSER = #{examuser,jdbcType=VARCHAR},
+      </if>
+      <if test="rLevel != null">
+        R_LEVEL = #{rLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="senduser != null">
+        SENDUSER = #{senduser,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        CONTENT = #{content,jdbcType=CLOB},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.youzhong.entity.Require">
+    update TF_REQUIRE
+    set NAME = #{name,jdbcType=VARCHAR},
+      PROID = #{proid,jdbcType=DECIMAL},
+      MODELID = #{modelid,jdbcType=DECIMAL},
+      PLANID = #{planid,jdbcType=DECIMAL},
+      FROMID = #{fromid,jdbcType=DECIMAL},
+      EXAMUSER = #{examuser,jdbcType=VARCHAR},
+      R_LEVEL = #{rLevel,jdbcType=DECIMAL},
+      SENDUSER = #{senduser,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=CLOB}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.youzhong.entity.Require">
+    update TF_REQUIRE
+    set NAME = #{name,jdbcType=VARCHAR},
+      PROID = #{proid,jdbcType=DECIMAL},
+      MODELID = #{modelid,jdbcType=DECIMAL},
+      PLANID = #{planid,jdbcType=DECIMAL},
+      FROMID = #{fromid,jdbcType=DECIMAL},
+      EXAMUSER = #{examuser,jdbcType=VARCHAR},
+      R_LEVEL = #{rLevel,jdbcType=DECIMAL},
+      SENDUSER = #{senduser,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

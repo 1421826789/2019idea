@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youzhong.dao.ImageMapper">
+  <resultMap id="BaseResultMap" type="com.youzhong.entity.Image">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="THUMBNAILFILENAME" jdbcType="VARCHAR" property="thumbnailFilename" />
+    <result column="NEWFILENAME" jdbcType="VARCHAR" property="newFilename" />
+    <result column="CONTENTTYPE" jdbcType="VARCHAR" property="contentType" />
+    <result column="IMAGESIZE" jdbcType="DECIMAL" property="size" />
+    <result column="THUMBNAILSIZE" jdbcType="DECIMAL" property="thumbnailSize" />
+    <result column="DATECREATED" jdbcType="DATE" property="dateCreated" />
+    <result column="LASTUPDATED" jdbcType="DATE" property="lastUpdated" />
+    <result column="URL" jdbcType="VARCHAR" property="url" />
+    <result column="THUMBNAILURL" jdbcType="VARCHAR" property="thumbnailUrl" />
+    <result column="DELETEURL" jdbcType="VARCHAR" property="deleteUrl" />
+    <result column="DELETETYPE" jdbcType="VARCHAR" property="deleteType" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, NAME, THUMBNAILFILENAME, NEWFILENAME, CONTENTTYPE, IMAGESIZE, THUMBNAILSIZE, 
+    DATECREATED, LASTUPDATED, URL, THUMBNAILURL, DELETEURL, DELETETYPE
+  </sql>
+  <select id="selectByExample" parameterType="com.youzhong.entity.ImageExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from TF_IMAGE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TF_IMAGE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+    delete from TF_IMAGE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.youzhong.entity.ImageExample">
+    delete from TF_IMAGE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.youzhong.entity.Image">
+    insert into TF_IMAGE (ID, NAME, THUMBNAILFILENAME, 
+      NEWFILENAME, CONTENTTYPE, IMAGESIZE, 
+      THUMBNAILSIZE, DATECREATED, LASTUPDATED, 
+      URL, THUMBNAILURL, DELETEURL, 
+      DELETETYPE)
+    values (#{id,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR}, #{thumbnailfilename,jdbcType=VARCHAR}, 
+      #{newfilename,jdbcType=VARCHAR}, #{contenttype,jdbcType=VARCHAR}, #{imagesize,jdbcType=DECIMAL}, 
+      #{thumbnailsize,jdbcType=DECIMAL}, #{datecreated,jdbcType=DATE}, #{lastupdated,jdbcType=DATE}, 
+      #{url,jdbcType=VARCHAR}, #{thumbnailurl,jdbcType=VARCHAR}, #{deleteurl,jdbcType=VARCHAR}, 
+      #{deletetype,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.youzhong.entity.Image">
+    insert into TF_IMAGE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="thumbnailfilename != null">
+        THUMBNAILFILENAME,
+      </if>
+      <if test="newfilename != null">
+        NEWFILENAME,
+      </if>
+      <if test="contenttype != null">
+        CONTENTTYPE,
+      </if>
+      <if test="imagesize != null">
+        IMAGESIZE,
+      </if>
+      <if test="thumbnailsize != null">
+        THUMBNAILSIZE,
+      </if>
+      <if test="datecreated != null">
+        DATECREATED,
+      </if>
+      <if test="lastupdated != null">
+        LASTUPDATED,
+      </if>
+      <if test="url != null">
+        URL,
+      </if>
+      <if test="thumbnailurl != null">
+        THUMBNAILURL,
+      </if>
+      <if test="deleteurl != null">
+        DELETEURL,
+      </if>
+      <if test="deletetype != null">
+        DELETETYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnailfilename != null">
+        #{thumbnailfilename,jdbcType=VARCHAR},
+      </if>
+      <if test="newfilename != null">
+        #{newfilename,jdbcType=VARCHAR},
+      </if>
+      <if test="contenttype != null">
+        #{contenttype,jdbcType=VARCHAR},
+      </if>
+      <if test="imagesize != null">
+        #{imagesize,jdbcType=DECIMAL},
+      </if>
+      <if test="thumbnailsize != null">
+        #{thumbnailsize,jdbcType=DECIMAL},
+      </if>
+      <if test="datecreated != null">
+        #{datecreated,jdbcType=DATE},
+      </if>
+      <if test="lastupdated != null">
+        #{lastupdated,jdbcType=DATE},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnailurl != null">
+        #{thumbnailurl,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteurl != null">
+        #{deleteurl,jdbcType=VARCHAR},
+      </if>
+      <if test="deletetype != null">
+        #{deletetype,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.youzhong.entity.ImageExample" resultType="java.lang.Long">
+    select count(*) from TF_IMAGE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update TF_IMAGE
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.name != null">
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thumbnailfilename != null">
+        THUMBNAILFILENAME = #{record.thumbnailfilename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newfilename != null">
+        NEWFILENAME = #{record.newfilename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contenttype != null">
+        CONTENTTYPE = #{record.contenttype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imagesize != null">
+        IMAGESIZE = #{record.imagesize,jdbcType=DECIMAL},
+      </if>
+      <if test="record.thumbnailsize != null">
+        THUMBNAILSIZE = #{record.thumbnailsize,jdbcType=DECIMAL},
+      </if>
+      <if test="record.datecreated != null">
+        DATECREATED = #{record.datecreated,jdbcType=DATE},
+      </if>
+      <if test="record.lastupdated != null">
+        LASTUPDATED = #{record.lastupdated,jdbcType=DATE},
+      </if>
+      <if test="record.url != null">
+        URL = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thumbnailurl != null">
+        THUMBNAILURL = #{record.thumbnailurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteurl != null">
+        DELETEURL = #{record.deleteurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deletetype != null">
+        DELETETYPE = #{record.deletetype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update TF_IMAGE
+    set ID = #{record.id,jdbcType=DECIMAL},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      THUMBNAILFILENAME = #{record.thumbnailfilename,jdbcType=VARCHAR},
+      NEWFILENAME = #{record.newfilename,jdbcType=VARCHAR},
+      CONTENTTYPE = #{record.contenttype,jdbcType=VARCHAR},
+      IMAGESIZE = #{record.imagesize,jdbcType=DECIMAL},
+      THUMBNAILSIZE = #{record.thumbnailsize,jdbcType=DECIMAL},
+      DATECREATED = #{record.datecreated,jdbcType=DATE},
+      LASTUPDATED = #{record.lastupdated,jdbcType=DATE},
+      URL = #{record.url,jdbcType=VARCHAR},
+      THUMBNAILURL = #{record.thumbnailurl,jdbcType=VARCHAR},
+      DELETEURL = #{record.deleteurl,jdbcType=VARCHAR},
+      DELETETYPE = #{record.deletetype,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.youzhong.entity.Image">
+    update TF_IMAGE
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnailfilename != null">
+        THUMBNAILFILENAME = #{thumbnailfilename,jdbcType=VARCHAR},
+      </if>
+      <if test="newfilename != null">
+        NEWFILENAME = #{newfilename,jdbcType=VARCHAR},
+      </if>
+      <if test="contenttype != null">
+        CONTENTTYPE = #{contenttype,jdbcType=VARCHAR},
+      </if>
+      <if test="imagesize != null">
+        IMAGESIZE = #{imagesize,jdbcType=DECIMAL},
+      </if>
+      <if test="thumbnailsize != null">
+        THUMBNAILSIZE = #{thumbnailsize,jdbcType=DECIMAL},
+      </if>
+      <if test="datecreated != null">
+        DATECREATED = #{datecreated,jdbcType=DATE},
+      </if>
+      <if test="lastupdated != null">
+        LASTUPDATED = #{lastupdated,jdbcType=DATE},
+      </if>
+      <if test="url != null">
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnailurl != null">
+        THUMBNAILURL = #{thumbnailurl,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteurl != null">
+        DELETEURL = #{deleteurl,jdbcType=VARCHAR},
+      </if>
+      <if test="deletetype != null">
+        DELETETYPE = #{deletetype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.youzhong.entity.Image">
+    update TF_IMAGE
+    set NAME = #{name,jdbcType=VARCHAR},
+      THUMBNAILFILENAME = #{thumbnailfilename,jdbcType=VARCHAR},
+      NEWFILENAME = #{newfilename,jdbcType=VARCHAR},
+      CONTENTTYPE = #{contenttype,jdbcType=VARCHAR},
+      IMAGESIZE = #{imagesize,jdbcType=DECIMAL},
+      THUMBNAILSIZE = #{thumbnailsize,jdbcType=DECIMAL},
+      DATECREATED = #{datecreated,jdbcType=DATE},
+      LASTUPDATED = #{lastupdated,jdbcType=DATE},
+      URL = #{url,jdbcType=VARCHAR},
+      THUMBNAILURL = #{thumbnailurl,jdbcType=VARCHAR},
+      DELETEURL = #{deleteurl,jdbcType=VARCHAR},
+      DELETETYPE = #{deletetype,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

@@ -1,0 +1,84 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/static/ztree/css/zTreeStyle/zTreeStyle.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/js/jquery-ui-1.8.15/themes/base/jquery.ui.all.css">
+<script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.15/jquery-1.6.2.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.15/ui/jquery.ui.widget.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.15/ui/jquery.ui.position.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.15/ui/jquery.ui.autocomplete.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-ui-1.8.15/ui/jquery.ui.core.js"></script>
+<script src="${pageContext.request.contextPath}/static/ztree/js/jquery.ztree.all.min.js"></script>
+</head>
+<body>
+    <input id="vgvgvg">
+     <div id="product-add-ztree" class="ztree"></div>
+     
+     <script type="text/javascript">   
+ 	var setting = {
+			callback : {
+				onClick : function(event, treeId, treeNode) {
+					if (!treeNode.isParent) {											
+							window.parent.setVal(treeNode.id,treeNode.name)																															 
+					}else{
+						alert("请点击相应负责人")
+					}														
+				}
+			},
+			edit : {
+				enable : true,
+				showRemoveBtn : false,
+				showRenameBtn : false,
+			},
+
+			data : {
+				simpleData : {
+					enable : true,
+					idKey : "id",
+					pIdKey : "pid",
+				}
+			},
+			async : {
+				enable : true,
+				url : "${pageContext.request.contextPath}/dept/deptuserlist.do",
+			},
+			view : {
+				showLine : true,
+
+			},
+
+		}
+		var zTreeObj = $.fn.zTree.init($("#product-add-ztree"), setting);
+ 	   zTreeObj.expandAll(true);
+       setTimeout("zTreeObj.expandAll(true)",200);
+       
+       
+       var availableTags=new Array();       
+       var zNodes;
+       $.ajax({
+    	   url:'${pageContext.request.contextPath}/dept/deptuserlist.do',
+    	   method:'POST',
+    	   async:false,
+    	   success:function(data){
+    		   zNodes=data;    		   
+    		   for (var i = 0; i < zNodes.length; i++) {
+    			   if(zNodes[i].id.indexOf('dept_')==-1){
+    				   availableTags.push({value:zNodes[i].id,label:zNodes[i].name}); 
+    			   }   			   
+			}
+    	   }
+       })
+       $("#vgvgvg").autocomplete({
+    	  source:availableTags,
+    	  select:function(event,ui){
+    		  window.parent.setVal(ui.item.value,ui.item.label)
+    		  return false;
+    	  }
+       });
+     </script>
+</body>
+</html>

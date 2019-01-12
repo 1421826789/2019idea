@@ -1,0 +1,127 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<style>
+			form {
+				margin: 0;
+			}
+			textarea {
+				display: block;
+			}
+		</style>
+
+</head>
+<body>
+ 
+      <form id="product-add-form">
+           <input type="hidden" name="proUser" >
+           <input type="hidden" name="testUser" >
+           <input type="hidden" name="pubUser" >
+           <table >
+                 <tr><td>产品名称：</td><td><input class="easyui-textbox" name="name"></td></tr>
+                 <tr><td>产品代号：</td><td><input class="easyui-textbox" name="version"></td></tr>
+                
+                 <tr><td>产品负责人：</td><td><input class="easyui-textbox" id="chanpin-textbox" 
+                 data-options="icons:[{iconCls:'icon-large-chart',handler:showTree}]"></td></tr>
+                 <tr><td>测试负责人</td><td><input class="easyui-textbox" id="ceshi-textbox" 
+                 data-options="icons:[{iconCls:'icon-large-chart',handler:showTree}]"></td></tr>
+                 <tr><td>发布负责人：</td><td><input class="easyui-textbox" id="fabu-textbox" 
+                 data-options="icons:[{iconCls:'icon-large-chart',handler:showTree}]"></td></tr>
+                 <tr><td>产品类型：</td><td><select name="proType">
+                        <option value="家用">家用</option>
+                        <option value="双人用">双人用</option>
+                        <option value="单人用">单人用</option>                   
+                        <option value="商务用">商务用</option>                   
+                 </select></td></tr>
+                 <tr><td>产品描述：</td><td><textarea name="proDesc" style="width:400px;height:200px;visibility:hidden"></textarea></td></tr>
+                 <tr><td colspan="2" align="center"><button type="button" onclick="baocun()">保存</button></td></tr>
+           </table>
+      </form>
+      <div id="product-add-dialog">
+      
+      </div>
+      <div id="win" class="easyui-window" title="My Window" style="width:200px;height:400px"
+      data-options="iconCls:'icon-save',modal:true,closed:true">
+            <iframe  id="tcl" src="" width="99%" height="99%"></iframe>
+      </div>
+      <script type="text/javascript">
+      
+            function setVal(id,name,arr){
+            	if(arr==1){
+            		$("input[name=proUser]").val(id);
+                	$("#chanpin-textbox").textbox("setValue",name);
+            	}
+            	if(arr==2){
+            		$("input[name=testUser]").val(id);
+                	$("#ceshi-textbox").textbox("setValue",name);
+            	}
+            	if(arr==3){
+            		$("input[name=pubUser]").val(id);
+                	$("#fabu-textbox").textbox("setValue",name);
+            	}           	
+            	$("#win").window('close');
+            }           
+            function showTree(e){            	
+            	var arr=0;
+            	if(e.data.target.id=='chanpin-textbox'){
+            		arr=1;
+            	}
+            	if(e.data.target.id=='ceshi-textbox'){
+            		arr=2;
+            	}
+            	if(e.data.target.id=='fabu-textbox'){
+            		arr=3;
+            	}
+    			$("#win").window({
+    				width:200,
+    				height:400,
+    				modal:true
+    			}).window('open');
+    			$("#tcl").attr('src','${pageContext.request.contextPath}/product/fuzeren.do?arr='+arr)
+    		}                     
+                  
+      function baocun(){
+    	  $("#product-add-form").submit() 
+      }
+      $("#product-add-form").form({
+    	 url:'${pageContext.request.contextPath}/product/add.do',
+    	 dataType:'json',
+    	 onSubmit:function(){
+    		 return $("#product-add-form").form("validate");
+    	 },
+         success:function(data){
+        	 if(typeof data=='string'){
+        		 data=JSON.parse(data)
+        	 }
+        	 var msg='操作失败'
+        	 if(data.status==200){
+        		 msg='操作成功'
+        		 $("#func_tab").tabs("close",arrr);
+        		 $("#product-list-datagrid").datagrid("reload");
+        		
+        	 }
+        	 $.messager.show({
+        		title:'提示信息',
+        		msg:msg,
+        		timeout:2000,
+        		showType:'slide'
+        	 });
+         }
+      });
+      
+       var editor;
+		$(function(){
+			editor = KindEditor.create('textarea[name="proDesc"]', {								
+				allowFileManager : true,
+				afterBlur: function(){this.sync();}
+			});
+		});
+																					
+       </script>
+      
+</body>
+</html>

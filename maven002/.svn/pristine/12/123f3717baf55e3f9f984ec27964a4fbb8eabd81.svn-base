@@ -1,0 +1,11 @@
+package com.youzhong.service;
+
+import com.youzhong.entity.Product;
+import com.youzhong.utils.Datagrid;
+import com.youzhong.utils.PageUtils;
+
+public interface IProductService {
+
+	Datagrid<Product> selectlist(PageUtils pageUtils);
+
+}

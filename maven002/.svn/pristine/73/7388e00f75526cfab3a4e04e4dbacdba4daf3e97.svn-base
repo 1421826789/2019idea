@@ -1,0 +1,103 @@
+package com.youzhong.entity;
+
+public class Require {
+    private Long id;
+
+    private String name;
+
+    private Long proid;
+
+    private Long modelid;
+
+    private Long planid;
+
+    private Long fromid;
+
+    private String examuser;
+
+    private Long rLevel;
+
+    private String senduser;
+
+    private String content;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public Long getProid() {
+        return proid;
+    }
+
+    public void setProid(Long proid) {
+        this.proid = proid;
+    }
+
+    public Long getModelid() {
+        return modelid;
+    }
+
+    public void setModelid(Long modelid) {
+        this.modelid = modelid;
+    }
+
+    public Long getPlanid() {
+        return planid;
+    }
+
+    public void setPlanid(Long planid) {
+        this.planid = planid;
+    }
+
+    public Long getFromid() {
+        return fromid;
+    }
+
+    public void setFromid(Long fromid) {
+        this.fromid = fromid;
+    }
+
+    public String getExamuser() {
+        return examuser;
+    }
+
+    public void setExamuser(String examuser) {
+        this.examuser = examuser == null ? null : examuser.trim();
+    }
+
+    public Long getrLevel() {
+        return rLevel;
+    }
+
+    public void setrLevel(Long rLevel) {
+        this.rLevel = rLevel;
+    }
+
+    public String getSenduser() {
+        return senduser;
+    }
+
+    public void setSenduser(String senduser) {
+        this.senduser = senduser == null ? null : senduser.trim();
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
+    }
+}

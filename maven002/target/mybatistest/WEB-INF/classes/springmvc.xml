@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/mvc 
+	http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+	
+	<!-- mvc的注解驱动：自动向容器中注入注解相关的HandlerMapping和HandlerAdapter -->
+	<mvc:annotation-driven/>
+
+	<!-- 扫描包管理controller-->
+	<context:component-scan base-package="com.yz.controller"/>
+	
+	<!-- 上传下载解析器:需要放在视图解析器上面 -->
+	<!-- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		文件最大值，单位是byte
+		<property name="maxUploadSize" value="1000000000"/>
+		默认编码
+		<property name="defaultEncoding" value="utf-8"/>
+	</bean> -->
+
+	<!-- 视图解析器viewResolver -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+		<property name="prefix" value="/WEB-INF/jsp/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<!-- 静态资源映射 -->
+<!--	<mvc:resources location="/js/" mapping="/js/**"/>
+	<mvc:resources location="/My97DatePicker/" mapping="/My97DatePicker/**"/>
+	<mvc:resources location="/bootstrap/" mapping="/bootstrap/**"/>
+	<mvc:resources location="/upload/" mapping="/upload/**"/>-->
+	<mvc:default-servlet-handler/>
+
+	<!-- 上传下载解析器 -->
+     <bean id="commonsMultipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+          <!-- 文件最大值，单位是byte -->
+          <property name="maxUploadSize" value="1000000"/>
+          <!-- 默认编码 -->
+          <property name="defaultEncoding" value="utf-8"/>
+     </bean>
+
+</beans>
